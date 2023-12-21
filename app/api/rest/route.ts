@@ -6,7 +6,7 @@ const sleepFor = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 const sleepInterval = 5000;
 
-const promises = [3, 5, 2, 1, 10].map(async function* (n, index) {
+const promises = [3, 5, 2, 1, 10].map(async function (n, index) {
   const customSleepInterval =
     Math.ceil((Math.random() * sleepInterval) / 1000) * 1000;
 
