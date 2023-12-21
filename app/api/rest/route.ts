@@ -1,6 +1,6 @@
 export const maxDuration = 90;
 
-export const dynamic = 'force-dynamic'; // defaults to auto
+export const dynamic = 'auto'; // defaults to auto
 
 const sleepFor = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
