@@ -46,6 +46,8 @@ export async function GET(request: Request) {
   );
   return new Response(
     JSON.stringify({
+      startedAt: start,
+      endedAt: end,
       actualTimeSpentOnSleeping,
       results,
     }),
