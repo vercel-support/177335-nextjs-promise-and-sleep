@@ -1,4 +1,5 @@
 export const maxDuration = 90;
+export const dynamic = 'force-dynamic'; // defaults to auto
 
 function iteratorToStream(iterator: any) {
   return new ReadableStream({
