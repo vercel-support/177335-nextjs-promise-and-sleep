@@ -21,34 +21,6 @@ const sleepInterval = 5000;
 
 const encoder = new TextEncoder();
 
-const promises = [3, 5, 2, 1, 10].map(async function* (n, index) {
-  const customSleepInterval =
-    Math.ceil((Math.random() * sleepInterval) / 1000) * 1000;
-
-  yield encoder.encode(
-    `<p>[${index}]  going to sleep for ${
-      customSleepInterval / 1000
-    } seconds ${n} times</p>`
-  );
-  let count = n;
-  while (count--) {
-    await sleepFor(customSleepInterval);
-    yield encoder.encode(
-      `<p>[${index}]  need to sleep ${count} more times (${
-        (count * customSleepInterval) / 1000
-      } seconds)...</p>`
-    );
-  }
-
-  const timeSpentOnSleeping = n * customSleepInterval;
-  console.log(
-    `[${index}] done sleeping for ${timeSpentOnSleeping / 1000} seconds`
-  );
-  return {
-    timeSpentOnSleeping,
-  };
-});
-
 async function* mergeIterators(iterators: any[]) {
   const readers = iterators.map(async function* (
     iterator: { next: () => any },
@@ -90,6 +62,34 @@ async function* mergeIterators(iterators: any[]) {
 // ... (rest of the code remains unchanged)
 
 export async function GET() {
+  const promises = [3, 5, 2, 1, 10].map(async function* (n, index) {
+    const customSleepInterval =
+      Math.ceil((Math.random() * sleepInterval) / 1000) * 1000;
+
+    yield encoder.encode(
+      `<p>[${index}]  going to sleep for ${
+        customSleepInterval / 1000
+      } seconds ${n} times</p>`
+    );
+    let count = n;
+    while (count--) {
+      await sleepFor(customSleepInterval);
+      yield encoder.encode(
+        `<p>[${index}]  need to sleep ${count} more times (${
+          (count * customSleepInterval) / 1000
+        } seconds)...</p>`
+      );
+    }
+
+    const timeSpentOnSleeping = n * customSleepInterval;
+    console.log(
+      `[${index}] done sleeping for ${timeSpentOnSleeping / 1000} seconds`
+    );
+    return {
+      timeSpentOnSleeping,
+    };
+  });
+
   const start = Date.now(); // Start time
 
   const allIterators = await Promise.all(promises);
